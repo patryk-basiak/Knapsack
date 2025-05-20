@@ -20,6 +20,29 @@ vals = transform(lines[start_row+1])
 
 tm = time.time()
 print("Brute force")
+
+def long_brute_force():
+    A = [0] * 30
+    best_val = 0
+    best_ch = []
+    for i in range(2 ** length):
+        j = length - 1
+        temp_val = 0
+        temp_weight = 0
+        while A[j] != 0 and j > 0:
+            A[j] = 0
+            j = j - 1
+        A[j] = 1
+        for k in range(length):
+            if A[k] == 1:
+                temp_weight += sizes[k]
+                temp_val += vals[k]
+        if temp_val > best_val and temp_weight <= capacity:
+            best_val = temp_val
+            best_weight = temp_weight
+            best_ch = A[:]
+    return best_ch
+
 def knapsack_brute_force(cap, n):
     if n == 0 or cap == 0:
         return 0, [0] * len(sizes)
@@ -50,7 +73,7 @@ print("Best choice:", best_choice)
 print("Total value:", best_value)
 print("Total weight:", t_weight)
 tm1 = time.time()
-print("Time", tm1 - tm)
+print("Execution time", tm1 - tm)
 
 tm = time.time()
 items = [(vals[i] / sizes[i], sizes[i], vals[i], i) for i in range(length)]
@@ -70,6 +93,6 @@ tm2 = time.time()
 print("Sizes:", sizes)
 print("Values:", vals)
 print("Choice", a)
-print("Value:", temp_val)
-print("Weight:", temp_wei)
-print("Execution time):", tm2 - tm1)
+print("Total Value:", temp_val)
+print("Total Weight:", temp_wei)
+print("Execution time:", tm2 - tm1)
